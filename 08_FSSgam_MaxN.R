@@ -209,6 +209,12 @@ combined.maxn <- bind_rows(fished.maxn, species.maxn,
   left_join(bathy) %>%
   left_join(ramps) %>%
   left_join(habitat) %>%
+  filter(!scientific%in%c("Glaucosomatidae Glaucosoma hebraicum",
+                          "centroberyx",
+                          "Labridae Ophthalmolepis lineolatus",
+                          "Scorpididae Neatypus obliquus",
+                          "targeted.abundance"
+                          )) %>%
   distinct()
 
 # rows should be 4 predictors x 287 samples
@@ -222,6 +228,7 @@ maxn.fh <- combined.maxn %>%
   filter(!scientific%in%c("Monacanthidae Nelusetta ayraud"))
 
 unique(maxn.fh$sample)
+unique(maxn.fh$scientific)
 
 maxn.io <- combined.maxn %>%
   semi_join(., metadata.io)
@@ -384,16 +391,7 @@ for(r in 1:nrow(out.i)){
 dev.off()
 
 
-# test 1 without dhueys start @ 10:45 AM - failed
-# test 2 ONLY pink snapper @ 11:23 - worked
-# test 3 - pink snapper and dheuys @ 12:32 - worked
-# test 4 - PS, D, and WKW @ 1:11 PM - worked
-# test 5 - test 4 + sweep @ 1:58 PM (checked at 2:32 PM) - worked
-# test 6 - test 5 + lineolatus @ 2:48 PM (checked 3:25) - worked
-# test 7 - add PJs @ 3:51 PM - worked
-# have removed ocean leatherjackets from Fishing HWY as not very many. Will leave in for in/out
-# test 8 - include plots of best models @ 9:02 AM (checked at 11:53 AM)
-# RE-TRY on 23/2 @ 10:21 AM - pictures didn' work.
+# started running at 8:48 AM - FIN 9:43
 
 # Model fits and importance---
 names(out.all)=resp.vars
