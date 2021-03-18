@@ -264,7 +264,7 @@ dat <- length.fh%>%
                 "distance.to.ramp",
                 "aspect", "log.tpi","log.roughness","log.slope",
                 "depth") %>%
-  #dplyr::filter(scientific%in%c("greater than legal size","smaller than legal size")) %>%
+  dplyr::filter(!scientific%in%c("fished greater than 20 cm","fished greater than 30 cm")) %>%
   as.data.frame()
 
 unique(dat$scientific)
@@ -371,7 +371,7 @@ dat <- length.io%>%
                 "distance.to.ramp",
                 "aspect", "log.tpi","log.roughness","log.slope",
                 "depth") %>%
-  #dplyr::filter(scientific%in%c("greater than legal size","smaller than legal size")) %>%
+  dplyr::filter(!scientific%in%c("fished greater than 20 cm","fished greater than 30 cm")) %>%
   as.data.frame()
 
 unique.vars=unique(as.character(dat$scientific))
