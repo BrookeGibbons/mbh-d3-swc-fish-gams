@@ -49,8 +49,9 @@ master <- read.csv("australia.life.history.csv") %>%
 
 names(master)
 
+unique(metadata$sample)
 
-total.number.fish <- sum(maxn$maxn) # 13596
+total.number.fish <- sum(maxn$maxn) # 13901
 total.number.measured <- length%>%
   filter(length>0)
 sum(total.number.measured$number) # 7575
@@ -87,13 +88,32 @@ species.table <- maxn%>%
 
 unique(species.table$fishing.type)
 
+ubiquity <- maxn%>%
+  filter(maxn>0) %>%
+  group_by(family,genus,species,scientific)%>%
+  summarise(no.of.deployments=n())%>%
+  ungroup() %>%
+  mutate(ubiquity=(no.of.deployments/295)*100)
+
+
+arch <-read.csv("archytype.list.csv") %>%
+  mutate(genus.species=sp.names) %>%
+  dplyr::select(genus.species,archetype)
+
+
+
 cleaned<-species.table%>%
   dplyr::select(family,genus.species,australian.common.name,fishing.type,iucn.ranking,mean.relative.abundance.per.deployment.plus.minus.SE,total.relative.abundance)%>%
   ## fix up variables
-  mutate(fishing.type=ifelse(fishing.type%in%c("C/R","C","B/C"),"Commercial",""))
+  mutate(fishing.type=ifelse(fishing.type%in%c("C/R","C","B/C"),"Commercial","")) %>%
+  left_join(arch)
 ## Make names nicer for table
 
+
 unique(cleaned$fishing.type)
+
+dir()
+write.csv(cleaned,"species.table.csv")
 
 # Descriptive stats
 
@@ -101,6 +121,20 @@ unique(cleaned$fishing.type)
 sum(maxn$maxn) # 13596
 length(unique(maxn$scientific)) # 147
 length(unique(maxn$family)) # 63 genus
+unique(maxn$sample)
+
+king.wrasse <- maxn%>%
+  filter(species%in%c("auricularis"))
+sum(king.wrasse$maxn)
+
+sweep <- maxn%>%
+  filter(species%in%c("obliquus"))
+sum(sweep$maxn)
+
+puller <- maxn%>%
+  filter(species%in%c("klunzingeri"))%>%
+  filter(genus%in%c("Chromis"))
+sum(puller$maxn)
 
 # # Make data for anita ----
 # summary<-maxn%>%

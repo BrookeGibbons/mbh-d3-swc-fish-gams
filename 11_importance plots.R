@@ -59,7 +59,7 @@ Theme1 <-
     axis.title.x=element_text(vjust=0.3, size=10),
     axis.title.y=element_text(vjust=0.6, angle=90, size=10),
     axis.text.x=element_text(size=10,angle = 90, hjust=1,vjust=0.5),
-    axis.text.y=element_text(size=10,face="italic"),
+    axis.text.y=element_text(size=10), # ,face="italic"
     axis.line.x=element_line(colour="black", size=0.5,linetype='solid'),
     axis.line.y=element_line(colour="black", size=0.5,linetype='solid'),
     strip.background = element_blank())
@@ -86,6 +86,9 @@ unique(dat.fh$predictor)
 unique(dat.fh$resp.var)
 
 # Plot gg.importance.scores ----
+library(ggtext)
+
+
 gg.importance.scores <- ggplot(dat.taxa.label, aes(x=predictor,y=resp.var,fill=importance))+
   geom_tile(show.legend=T) +
   scale_fill_gradientn(legend_title,colours=c("white", re), na.value = "grey98",
@@ -121,8 +124,8 @@ gg.importance.scores <- ggplot(dat.taxa.label, aes(x=predictor,y=resp.var,fill=i
                                                             "all greater than 30 cm",
                                                             "all greater than 20 cm" ,
                                                             "Heterodontidae Heterodontus portusjacksoni",
-                                                            "Sparidae Chrysophrys auratus",
                                                             "Labridae Coris auricularis",
+                                                            "Sparidae Chrysophrys auratus",
                                                             "species.richness",
                                                             "total.abundance"
   ),
@@ -130,9 +133,9 @@ gg.importance.scores <- ggplot(dat.taxa.label, aes(x=predictor,y=resp.var,fill=i
                                                         "Greater than legal size",
                                                         "Greater than 30 cm",
                                                         "Greater than 20 cm",
-                                                        "H. portusjacksoni",
-                                                        "C. auratus",
-                                                        "C. auricularis",
+                                                        "*H. portusjacksoni*",
+                                                        "*C. auricularis*",
+                                                        "*C. auratus*",
                                                         "Species richness",
                                                         "Total abundance"
                    ))+
@@ -140,6 +143,7 @@ gg.importance.scores <- ggplot(dat.taxa.label, aes(x=predictor,y=resp.var,fill=i
   ylab(NULL)+
   theme_classic()+
   Theme1+
+  theme(axis.text.y = element_markdown())+
   geom_text(aes(label=label))
 gg.importance.scores
 
@@ -215,8 +219,9 @@ gg.importance.scores <- ggplot(dat.taxa.label, aes(x=predictor,y=resp.var,fill=i
                               "all greater than 20 cm" ,
                               "Monacanthidae Nelusetta ayraud",
                               "Heterodontidae Heterodontus portusjacksoni",
-                              "Sparidae Chrysophrys auratus",
+                             
                               "Labridae Coris auricularis",
+                              "Sparidae Chrysophrys auratus",
                               "species.richness",
                               "total.abundance"
   ),
@@ -224,10 +229,11 @@ gg.importance.scores <- ggplot(dat.taxa.label, aes(x=predictor,y=resp.var,fill=i
                                        "Greater than legal size",
                                        "Greater than 30 cm",
                                        "Greater than 20 cm",
-                                       "N. ayraud",
-                                       "H. portusjacksoni",
-                                       "C. auratus",
-                                       "C. auricularis",
+                                       "*N. ayraud*",
+                                       "*H. portusjacksoni*",
+                                       
+                                       "*C. auricularis*",
+                                       "*C. auratus*",
                                        "Species richness",
                                        "Total abundance"
   ))+
@@ -235,6 +241,7 @@ gg.importance.scores <- ggplot(dat.taxa.label, aes(x=predictor,y=resp.var,fill=i
   ylab(NULL)+
   theme_classic()+
   Theme1+
+  theme(axis.text.y = element_markdown())+
   geom_text(aes(label=label))
 gg.importance.scores
 
