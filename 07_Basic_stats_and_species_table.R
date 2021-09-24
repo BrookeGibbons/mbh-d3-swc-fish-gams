@@ -14,6 +14,7 @@ library(dplyr)
 library(ggplot2)
 library(stringr)
 library(googlesheets4)
+library(tidyverse)
 
 ## Set your working directory ----
 working.dir<-dirname(rstudioapi::getActiveDocumentContext()$path) # to directory of current file - or type your own
